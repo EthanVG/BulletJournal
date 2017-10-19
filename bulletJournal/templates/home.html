@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bullet Journal</title>
+        
+        <!-- CSS -->
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+        <!-- Journal -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+        <!-- JavaScript -->
+        <!-- jQuery -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+          $( function() {
+            $( "#datepicker" ).datepicker();
+          } );
+          </script>
+        <!-- Bootstrap -->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('add_bullet_get') }}">Add Bullet</a></li>
+                <li><a href="{{ url_for('search_bullet_display') }}">Search Bullet</a></li>
+            </ul>
+
+        </div>
+        <div>
+        <!-- Datepicker Script Here -->
+        
+        </div>
+        <div class="container">
+            
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

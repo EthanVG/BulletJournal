@@ -1,0 +1,15 @@
+{% import "macros.html" as macros with context %}
+{% extends "home.html" %}
+{% block content %}
+<h1>
+    Migrate Bullet
+</h1>
+
+<form role="form" method="POST">
+    {{ macros.render_bullet(bullet) }}
+    <div>
+        New Date: <input type="text" name="date" id="datepicker">
+    </div>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

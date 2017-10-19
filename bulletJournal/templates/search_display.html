@@ -1,0 +1,19 @@
+{% import "macros.html" as macros with context %}
+{% extends "home.html" %}
+{% block content %}
+
+<form role="form" method="GET">
+    <div>
+        Search: <input type="text" name="q" id="q" placeholder="Search">
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+{% for bullet in bullets %}
+{{ macros.render_bullet(bullet) }}
+<a href="{{ url_for('edit_bullet_get', ID=bullet.id) }}">Edit Bullet</a> |
+<a href="{{ url_for('delete_bullet', ID=bullet.id) }}">Delete Bullet</a> |
+<a href="{{ url_for('migrate_bullet_get', ID=bullet.id) }}">Migrate Bullet</a>
+{% endfor %}
+
+{% endblock %}

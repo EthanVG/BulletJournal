@@ -1,0 +1,11 @@
+Flask
+Jinja2
+MarkupSafe
+SQLAlchemy
+Werkzeug
+itsdangerous
+jsonschema
+nose
+psycopg2
+flask-script
+mistune

@@ -1,0 +1,26 @@
+{% extends "home.html" %}
+
+{% block content %}
+<h1>
+    Edit Bullet
+</h1>
+
+<form role="form" method="POST">
+    <div>
+        Date: <input type="text" name="date" id="datepicker">
+    </div>
+    <div>
+        <label for="contentType">Bullet Type</label>
+        <select id="contentType" name="contentType">
+            <option value="task">Task</option> 
+            <option value="event">Event</option>
+            <option value="note">Note</option>
+        </select>
+    </div>
+    <div>
+        <label for="content">Content</label>
+        <textarea id="content" name="content" placeholder="Bullet content" rows="2" required>{{ bullet.content }}</textarea>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
