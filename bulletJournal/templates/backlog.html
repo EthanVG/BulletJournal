@@ -1,0 +1,30 @@
+{% import "macros.html" as macros with context %}
+{% extends "home.html" %}
+{% block content %}
+<!-- Create array for javascript on page -->
+
+<form role="form" method="POST">
+    <div>
+        New Date: <input type="text" name="date" id="datepicker">
+    </div>
+    <button type="submit">Submit</button>
+
+
+    {% for bullet in bullets %}
+    {{ macros.render_bullet(bullet) }}
+    
+    <div>
+        <a href="{{ url_for('edit_bullet_get', ID=bullet.id) }}">Edit Bullet</a> |
+        <a href="{{ url_for('delete_bullet', ID=bullet.id) }}">Delete Bullet</a> |
+        <a href="{{ url_for('migrate_bullet_get', ID=bullet.id) }}">Migrate Bullet</a>
+    </div>
+    
+    <div>
+        <input type="checkbox" id="backlog_list" name="backlog_list" value="{{ bullet.id }}">
+    </div>
+    <!-- Javascript that checks the checkbox value and adds ID to array -->
+    
+    {% endfor %}
+    
+</form>
+{% endblock %}

@@ -4,12 +4,20 @@
 
 <form role="form" method="GET">
     <div>
+        <div>
+            Current Date: {{ date }}
+        </div>
         Date: <input type="text" name="date" id="datepicker">
+        <!-- Date: <input type="date" name="date"> -->
     </div>
+    
     <button type="submit">Submit</button>
     <div>
     </div>
 </form>
+<div>
+    
+</div>
 
 
 
@@ -17,7 +25,21 @@
 {{ macros.render_bullet(bullet) }}
 <a href="{{ url_for('edit_bullet_get', ID=bullet.id) }}">Edit Bullet</a> |
 <a href="{{ url_for('delete_bullet', ID=bullet.id) }}">Delete Bullet</a> |
-<a href="{{ url_for('migrate_bullet_get', ID=bullet.id) }}">Migrate Bullet</a>
+<a href="{{ url_for('migrate_bullet_get', ID=bullet.id) }}">Migrate Bullet</a> |
+<a href="{{ url_for('complete_bullet', ID=bullet.id) }}">Complete Bullet</a>
 {% endfor %}
+
+<ul>
+    {% if has_next %}
+    <li>
+    <a href="{{ url_for('home', page=page + 1, date=date) }}">&larr; </a>
+    </li>
+    {% endif %}
+    {% if has_prev %}
+    <li>
+    <a href="{{ url_for('home', page=page - 1, date=date) }}">&rarr; </a>
+    </li>
+    {% endif %}
+</ul>
 
 {% endblock %}

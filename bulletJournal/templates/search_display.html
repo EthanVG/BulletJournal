@@ -16,4 +16,17 @@
 <a href="{{ url_for('migrate_bullet_get', ID=bullet.id) }}">Migrate Bullet</a>
 {% endfor %}
 
+<ul>
+    {% if has_next %}
+    <li>
+    <a href="{{ url_for('search_bullet_display', page=page + 1, q=q) }}">&larr; </a>
+    </li>
+    {% endif %}
+    {% if has_prev %}
+    <li>
+    <a href="{{ url_for('search_bullet_display', page=page - 1, q=q) }}">&rarr; </a>
+    </li>
+    {% endif %}
+</ul>
+
 {% endblock %}

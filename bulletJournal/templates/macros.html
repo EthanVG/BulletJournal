@@ -2,11 +2,11 @@
 <div>    
 
     {% if bullet.contentType == "task" %}
-    <h2>* {{ bullet.content | markdown }} {{ bullet.date | dateformat("%d/%m/%y") }}</h2>
+    <h2>* {{ bullet.content | markdown }} {{ bullet.date | dateformat("%m/%d/%y") }}</h2>
     {% elif bullet.contentType == "event" %}
-    <h2>O {{ bullet.content | markdown }} {{ bullet.date | dateformat("%d/%m/%y") }}</h2>
+    <h2>O {{ bullet.content | markdown }} {{ bullet.date | dateformat("%m/%d/%y") }}</h2>
     {% elif bullet.contentType == "note" %}
-    <h2>- {{ bullet.content | markdown }} {{ bullet.date | dateformat("%d/%m/%y") }}</h2>
+    <h2>- {{ bullet.content | markdown }} {{ bullet.date | dateformat("%m/%d/%y") }}</h2>
     {% endif %}
 
 </div>

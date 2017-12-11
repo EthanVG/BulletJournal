@@ -9,3 +9,4 @@ nose
 psycopg2
 flask-script
 mistune
+splinter

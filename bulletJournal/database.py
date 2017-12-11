@@ -5,6 +5,7 @@ from sqlalchemy import Column, Integer, String, Sequence, ForeignKey, DateTime, 
 
 from . import app
 
+print(app.config["DATABASE_URI"])
 engine = create_engine(app.config["DATABASE_URI"])
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
@@ -17,5 +18,9 @@ class Bullet(Base):
     contentType = Column(String(128), nullable=False)
     content = Column(String(128), nullable=False)
     date = Column(Date, nullable=False)
+    complete = Column(Integer, nullable=False)
+    
+    def migrate(self, date):
+        self.date = date
 
 Base.metadata.create_all(engine)
