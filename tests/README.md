@@ -1,0 +1,1 @@
+BulletJournal is a web-app that simulates a journal

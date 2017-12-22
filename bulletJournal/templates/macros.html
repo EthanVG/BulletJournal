@@ -1,13 +1,18 @@
 {% macro render_bullet(bullet) %}
-<div>    
-
-    {% if bullet.contentType == "task" %}
-    <h2>* {{ bullet.content | markdown }} {{ bullet.date | dateformat("%m/%d/%y") }}</h2>
-    {% elif bullet.contentType == "event" %}
-    <h2>O {{ bullet.content | markdown }} {{ bullet.date | dateformat("%m/%d/%y") }}</h2>
-    {% elif bullet.contentType == "note" %}
-    <h2>- {{ bullet.content | markdown }} {{ bullet.date | dateformat("%m/%d/%y") }}</h2>
-    {% endif %}
-
-</div>
+    
+    <div style="display: inline">
+        {% if bullet.contentType == "task" %}
+            <p>*</p>
+        {% elif bullet.contentType == "event" %}
+            <p>O</p>
+        {% elif bullet.contentType == "note" %}
+            <p style="display: inline">-</p>
+        {% endif %}
+    </div>
+    <div style="display: inline">
+        <p style="display: inline">{{ bullet.content | markdown }}</p>
+    </div>
+    
+    <p>{{ bullet.date | dateformat("%m/%d/%y") }}</p>
+    
 {% endmacro %}

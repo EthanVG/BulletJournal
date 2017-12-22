@@ -1,15 +1,39 @@
 {% import "macros.html" as macros with context %}
 {% extends "home.html" %}
 {% block content %}
-<h1>
-    Migrate Bullet
-</h1>
 
-<form role="form" method="POST">
-    {{ macros.render_bullet(bullet) }}
-    <div>
-        New Date: <input type="text" name="date" id="datepicker">
+<!-- Header -->
+<header class="masthead" style="">
+    <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+              <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+            <h1>Move Your Bullet</h1>
+              <span class="subheading"></span>
+                </div>
+            </div>
+        </div>
     </div>
-    <button type="submit">Submit</button>
-</form>
+</header>
+
+<!-- Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-preview">
+                <form role="form" method="POST">
+                    {{ macros.render_bullet(bullet) }}
+                    <div style="display: inline">
+                        New Date: <input type="text" name="date" id="datepicker">
+                    </div>
+                    <div style="display: inline">
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

@@ -1,26 +1,47 @@
 {% extends "home.html" %}
-
 {% block content %}
-<h1>
-    Add Bullet
-</h1>
 
-<form role="form" method="POST">
-    <div>
-        Date: <input type="text" name="date" id="datepicker">
+<!-- Header -->
+<header class="masthead" style="">
+    <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+              <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+            <h1>Add Your Bullet</h1>
+              <span class="subheading"></span>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <label for="contentType">Bullet Type</label>
-        <select id="contentType" name="contentType">
-            <option value="task">Task</option> 
-            <option value="event">Event</option>
-            <option value="note">Note</option>
-        </select>
+</header>
+    
+<!-- Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+        
+        <form role="form" method="POST">
+            <div>
+                Date: <input type="text" name="date" id="datepicker">
+            </div>
+            <div>
+                <label for="contentType">Bullet Type</label>
+                <select id="contentType" name="contentType">
+                    <option value="task">Task</option> 
+                    <option value="event">Event</option>
+                    <option value="note">Note</option>
+                </select>
+            </div>
+            <div>
+                <label for="content">Content</label>
+                <textarea id="content" name="content" placeholder="Bullet content" rows="2" required></textarea>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+
     </div>
-    <div>
-        <label for="content">Content</label>
-        <textarea id="content" name="content" placeholder="Bullet content" rows="2" required></textarea>
-    </div>
-    <button type="submit">Submit</button>
-</form>
+  </div>
+</div>
+
 {% endblock %}

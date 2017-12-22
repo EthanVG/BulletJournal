@@ -3,13 +3,21 @@
     <head>
         <title>Bullet Journal</title>
         
-        <!-- CSS -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
         <!-- Bootstrap -->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        
         <!-- Journal -->
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-
+        <!-- CSS -->
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesone.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/clean-blog.min.css') }}">
+        
+        
+        
         <!-- JavaScript -->
         <!-- jQuery -->
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -25,19 +33,38 @@
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div>
-            <ul>
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('add_bullet_get') }}">Add Bullet</a></li>
-                <li><a href="{{ url_for('search_bullet_display') }}">Search Bullet</a></li>
-                <li><a href="{{ url_for('backlog_get') }}">Backlog</a></li>
-            </ul>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Bullet Journal</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('add_bullet_get') }}">Add Bullet</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('search_bullet_display') }}">Search</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('backlog_get') }}">Backlog</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-        </div>
         
-        <div class="container">
-            
-            {% block content %}{% endblock %}
-        </div>
+    
+    
+    {% block content %}{% endblock %}
+    
     </body>
 </html>

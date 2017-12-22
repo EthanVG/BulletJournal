@@ -1,7 +1,8 @@
 class DevelopmentConfig(object):
-    DATABASE_URI = "postgresql://ubuntu:thinkful@localhost:5432/bulletJournal"
+    DATABASE_URI="postgresql://ubuntu:thinkful@localhost:5432/bulletJournal"
     DEBUG = True
 
+
 class TestingConfig(object):
-    DATABASE_URI = "postgresql://ubuntu:thinkful@localhost:5432/bulletJournal-test"
+    DATABASE_URI="postgresql://ubuntu:thinkful@localhost:5432/bulletJournal-test"
     DEBUG = True

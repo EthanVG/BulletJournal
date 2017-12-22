@@ -2,44 +2,68 @@
 {% extends "home.html" %}
 {% block content %}
 
-<form role="form" method="GET">
-    <div>
-        <div>
-            Current Date: {{ date }}
+<!-- Header -->
+<header class="masthead" style="">
+    <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+              <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+            <h1>Today's Journal</h1>
+              <span class="subheading">What's Today?</span>
+                </div>
+            </div>
         </div>
-        Date: <input type="text" name="date" id="datepicker">
-        <!-- Date: <input type="date" name="date"> -->
     </div>
-    
-    <button type="submit">Submit</button>
-    <div>
+</header>
+
+<!-- Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-preview">
+                <form role="form" method="GET">
+                    <div>
+                        Current Date: {{ date }}
+                    </div>
+                                    
+                    <div style="display: inline">
+                        Date: <input type="text" name="date" id="datepicker">
+                    </div>
+                                
+                    <div style="display: inline">
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+                    
+        {% for bullet in bullets %}
+                    
+            <div class="post-preview">
+                {{ macros.render_bullet(bullet) }}
+                <p class="post-meta">
+                    <a href="{{ url_for('edit_bullet_get', ID=bullet.id) }}">Edit Bullet</a> |
+                    <a href="{{ url_for('delete_bullet', ID=bullet.id) }}">Delete Bullet</a> |
+                    <a href="{{ url_for('migrate_bullet_get', ID=bullet.id) }}">Migrate Bullet</a> |
+                    <a href="{{ url_for('complete_bullet', ID=bullet.id) }}">Complete Bullet</a>
+                </p>
+            </div>
+            <hr>
+                    
+        {% endfor %}
+                    
+                    
+            <div class="clearfix">
+                {% if has_next %}
+                    <a href="{{ url_for('home', page=page + 1, date=date) }}" class="btn btn-primary float-left"> Previous Bullets &larr; </a>
+                {% endif %}
+                
+                {% if has_prev %}
+                    <a href="{{ url_for('home', page=page - 1, date=date) }}" class="btn btn-primary float-right"> Next Bullets &rarr; </a>
+                {% endif %}
+            </div>
+        </div>
     </div>
-</form>
-<div>
-    
 </div>
-
-
-
-{% for bullet in bullets %}
-{{ macros.render_bullet(bullet) }}
-<a href="{{ url_for('edit_bullet_get', ID=bullet.id) }}">Edit Bullet</a> |
-<a href="{{ url_for('delete_bullet', ID=bullet.id) }}">Delete Bullet</a> |
-<a href="{{ url_for('migrate_bullet_get', ID=bullet.id) }}">Migrate Bullet</a> |
-<a href="{{ url_for('complete_bullet', ID=bullet.id) }}">Complete Bullet</a>
-{% endfor %}
-
-<ul>
-    {% if has_next %}
-    <li>
-    <a href="{{ url_for('home', page=page + 1, date=date) }}">&larr; </a>
-    </li>
-    {% endif %}
-    {% if has_prev %}
-    <li>
-    <a href="{{ url_for('home', page=page - 1, date=date) }}">&rarr; </a>
-    </li>
-    {% endif %}
-</ul>
-
 {% endblock %}
+
