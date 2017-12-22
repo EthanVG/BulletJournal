@@ -7,14 +7,13 @@ from io import StringIO, BytesIO
 from urllib.parse import urlparse
 import sys;
 from datetime import datetime, date
-from bulletJournal.database import session, Bullet, Base
 
 os.environ["CONFIG_PATH"] = "bulletJournal.config.TestingConfig"
-from bulletJournal import app
 from bulletJournal.database import session, Bullet, Base, engine
+from bulletJournal import app
 
 import signal
-# import psutil
+import psutil
 
 
 # TO RUN
@@ -57,7 +56,7 @@ class TestBulletJournalAcceptance(unittest.TestCase):
         session.close()
         engine.dispose()
         # Base.metadata.drop_all(engine)
-        # self.browser.process.send_signal(signal.SIGTERM)
+        # self.process.send_signal(signal.SIGTERM)
         self.browser.quit()
         # time.sleep(1)
         os.system("pkill phantomjs")
