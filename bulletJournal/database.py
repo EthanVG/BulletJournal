@@ -5,7 +5,6 @@ from sqlalchemy import Column, Integer, String, Sequence
 from sqlalchemy import ForeignKey, DateTime, Date
 from . import app
 
-print(app.config["DATABASE_URI"])
 engine = create_engine(app.config["DATABASE_URI"])
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
