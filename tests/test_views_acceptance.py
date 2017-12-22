@@ -14,7 +14,7 @@ from bulletJournal import app
 
 
 import signal
-import psutil
+# import psutil
 
 
 # TO RUN
