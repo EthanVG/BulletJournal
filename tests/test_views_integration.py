@@ -25,7 +25,6 @@ class TestBulletJournal(unittest.TestCase):
 
     def tearDown(self):
         """ Test teardown """
-        print("THIS")
         session.close()
         # Remove the tables and their data from the database
         Base.metadata.drop_all(engine)
@@ -34,7 +33,6 @@ class TestBulletJournal(unittest.TestCase):
     
     def test_migrateBullet(self):
         """ Test migrating an bullet """
-        print("TEST")
         date1 = date(2017, 10, 10)
         date2 = date(2017, 11, 11)
         

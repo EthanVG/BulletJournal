@@ -22,7 +22,6 @@ class TestBulletJournalAcceptance(unittest.TestCase):
     
     def setUp(self):
         """ Test setup """
-        print("SETUP")
         
         self.browser = Browser("phantomjs")
         
@@ -39,44 +38,32 @@ class TestBulletJournalAcceptance(unittest.TestCase):
 
     def tearDown(self):
         """ Test teardown """
-        print("TEARDOWN")
         
         toRemove = session.query(Bullet).all()
         for item in toRemove:
             session.delete(item)
         session.commit()
         
-        #self.process.terminate()
+        # self.process.terminate()
         pid = self.process.pid
         
         p = psutil.Process(pid)
-        p.terminate() #or p.kill()
+        p.terminate() # or p.kill()
         time.sleep(1)
-        print(self.process.is_alive())
-        if(self.process.exitcode == -signal.SIGTERM):
-            print("TERMINATE SUCCESS")
-        else:
-            print("TERMINATE FAIL")
+        
         session.close()
         engine.dispose()
-        #Base.metadata.drop_all(engine)
-        #self.browser.process.send_signal(signal.SIGTERM)
+        # Base.metadata.drop_all(engine)
+        # self.browser.process.send_signal(signal.SIGTERM)
         self.browser.quit()
-        #time.sleep(1)
+        # time.sleep(1)
         os.system("pkill phantomjs")
         time.sleep(1)
-        print(self.process.is_alive())
-        if(self.process.exitcode == -signal.SIGTERM):
-            print("TERMINATE SUCCESS 2")
-        else:
-            print("TERMINATE FAIL 2")
         
     def test_editBullet(self):
         """ Edit Bullet """
-        print("START EDIT TEST")
         
         count = session.query(Bullet).count()
-        print("COUNT 1: {}".format(count))
         
         date1 = date(2010, 10, 10)
         bullet1 = Bullet(contentType = "task", content = "edit test", date=date1, complete=0)
@@ -104,47 +91,40 @@ class TestBulletJournalAcceptance(unittest.TestCase):
         button = self.browser.find_by_css("button[type=submit]")
         button.click()
         self.assertEqual(self.browser.url, "http://127.0.0.1:8080/?date={}".format(date(2010, 10, 10).strftime("%m/%d/%Y").replace("/", "%2F")))
-        print(self.browser.find_by_tag("h2").text)
-        
-        print("EDIT TEST END")
         
     def test_deleteBullet(self):
         """ Delete Test """
-        print("DELETE TEST START")
         
-        #pre-populate date
+        # pre-populate date
         date1 = date(2010, 10, 10)
         bullet1 = Bullet(contentType = "task", content = "delete test", date=date1, complete=0)
         session.add(bullet1)
         session.commit()
         
-        #change date
+        # change date
         self.browser.visit("http://127.0.0.1:8080/")
         self.browser.fill("date", date(2010, 10, 10).strftime("%m/%d/%Y"))
         button = self.browser.find_by_css("button[type=submit]")
         button.click()
         self.assertEqual(self.browser.url, "http://127.0.0.1:8080/?date={}".format(date(2010, 10, 10).strftime("%m/%d/%Y").replace("/", "%2F")))
         
-        #delete bullet
+        # delete bullet
         self.assertEqual(self.browser.is_text_present("delete test"), True)
         self.browser.click_link_by_text("Delete Bullet")
         
-        #check return to homepage
+        # check return to homepage
         self.assertEqual(self.browser.url, "http://127.0.0.1:8080/")
         
-        #go to 10-10-10 check for no bullets
+        # go to 10-10-10 check for no bullets
         self.browser.fill("date", date(2010, 10, 10).strftime("%m/%d/%Y"))
         button = self.browser.find_by_css("button[type=submit]")
         button.click()
         self.assertEqual(self.browser.url, "http://127.0.0.1:8080/?date={}".format(date(2010, 10, 10).strftime("%m/%d/%Y").replace("/", "%2F")))
         self.assertEqual(self.browser.is_text_present("delete test"), False)
         
-        print("DELETE TEST END")
         
     def test_completeBullet(self):
         """ Complete Test """
-        
-        print("COMPLETE TEST START")
         
         #pre-populate date
         date1 = date(2010, 10, 10)
@@ -173,11 +153,8 @@ class TestBulletJournalAcceptance(unittest.TestCase):
         self.assertEqual(self.browser.url, "http://127.0.0.1:8080/?date={}".format(date(2010, 10, 10).strftime("%m/%d/%Y").replace("/", "%2F")))
         self.assertEqual(self.browser.is_text_present("complete test"), False)
         
-        print("COMPLETE TEST END")
-        
     def test_addBullet(self):
         """ Add Test """
-        print("START ADD TEST")
         
         self.browser.visit("http://127.0.0.1:8080/")
         self.browser.click_link_by_text("Add Bullet")
@@ -198,11 +175,8 @@ class TestBulletJournalAcceptance(unittest.TestCase):
         
         self.assertEqual(self.browser.is_text_present("add test"), True)
         
-        print("END ADD TEST")
-        
     def test_homepage(self):
         """ Home Test """
-        print("START HOME TEST")
         
         date1 = date(2010, 10, 10)
         
@@ -214,13 +188,8 @@ class TestBulletJournalAcceptance(unittest.TestCase):
         button.click()
         self.assertEqual(self.browser.url, "http://127.0.0.1:8080/?date={}".format(date1.strftime("%m/%d/%Y").replace("/", "%2F")))
         
-        print("END HOME TEST")
-        
-        
     def test_search(self):
         """ Search Test """
-        
-        print("SEARCH TEST START")
         
         date1 = date(2010, 10, 10)
         bullet1 = Bullet(contentType = "task", content = "search test", date=date1, complete=0)
@@ -238,12 +207,8 @@ class TestBulletJournalAcceptance(unittest.TestCase):
         self.assertEqual(self.browser.url, "http://127.0.0.1:8080/bullet/search?q=search+test")
         self.assertEqual(self.browser.is_text_present("search test"), True)
         
-        print("SEARCH TEST END")
-        
     def test_backlog(self):
         """ Backlog Test """
-        
-        print("BACKLOG TEST START")
         
         date1 = date(2010, 10, 10)
         bullet1 = Bullet(contentType = "task", content = "backlog test", date=date1, complete=0)
@@ -270,8 +235,6 @@ class TestBulletJournalAcceptance(unittest.TestCase):
         newDate = newDate.replace(newMonth)
         
         self.assertEqual(bullet1.date, newDate)
-        
-        print("BACKLOG TEST END")
     
 if __name__ == "__main__":
    unittest.main()
