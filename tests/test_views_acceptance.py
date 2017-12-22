@@ -156,9 +156,7 @@ class TestBulletJournalAcceptance(unittest.TestCase):
     def test_addBullet(self):
         """ Add Test """
         
-        self.browser.visit("http://127.0.0.1:8080/")
-        self.browser.click_link_by_text("Add Bullet")
-        self.assertEqual(self.browser.url, "http://127.0.0.1:8080/bullet/add")
+        self.browser.visit("http://127.0.0.1:8080/bullet/add")
         
         self.browser.choose("contentType", "task")
         self.browser.fill("content", "add test")
@@ -196,10 +194,7 @@ class TestBulletJournalAcceptance(unittest.TestCase):
         session.add(bullet1)
         session.commit()
         
-        self.browser.visit("http://127.0.0.1:8080/")
-        self.browser.click_link_by_text("Search Bullet")
-        
-        self.assertEqual(self.browser.url, "http://127.0.0.1:8080/bullet/search")
+        self.browser.visit("http://127.0.0.1:8080/bullet/search")
         self.browser.fill("q", "search test")
         button = self.browser.find_by_css("button[type=submit]")
         button.click()
@@ -214,13 +209,8 @@ class TestBulletJournalAcceptance(unittest.TestCase):
         bullet1 = Bullet(contentType = "task", content = "backlog test", date=date1, complete=0)
         session.add(bullet1)
         session.commit()
-        
-        self.browser.visit("http://127.0.0.1:8080/")
-        self.browser.click_link_by_text("Backlog")
-        self.assertEqual(self.browser.url, "http://127.0.0.1:8080/bullet/backlog")
-        
-        print(self.browser.find_by_tag("h2").text)
-        
+
+        self.browser.visit("http://127.0.0.1:8080/bullet/backlog")
         self.browser.check("backlog_list")
         
         button = self.browser.find_by_css("button[type=submit]")
