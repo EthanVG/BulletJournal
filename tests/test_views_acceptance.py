@@ -7,14 +7,13 @@ from io import StringIO, BytesIO
 from urllib.parse import urlparse
 import sys;
 from datetime import datetime, date
-import signal
-import psutil
 
 os.environ["CONFIG_PATH"] = "bulletJournal.config.TestingConfig"
 from bulletJournal import app
 from bulletJournal.database import session, Bullet, Base, engine
 
-
+import signal
+import psutil
 
 
 # TO RUN
