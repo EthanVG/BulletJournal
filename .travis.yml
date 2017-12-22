@@ -7,5 +7,5 @@ env:
 before_script:
     - psql -c 'create database "bulletJournal-test";' -U postgres
 script:
-    - PYTHONPATH=. python3 tests/bulletJournal_tests.py
+    - PYTHONPATH=. python3 tests/test_views_integration_tests.py
     - PYTHONPATH=. python3 tests/test_views_acceptance.py
