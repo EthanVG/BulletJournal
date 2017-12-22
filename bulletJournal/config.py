@@ -6,7 +6,8 @@ class DevelopmentConfig(object):
 class TestingConfig(object):
     DATABASE_URI = "postgresql://ubuntu:thinkful@localhost:5432/bulletJournal-test"
     DEBUG = True
-    
+
+
 class TravisConfig(object):
     DATABASE_URI = "postgresql://localhost:5432/bulletJournal-test"
     DEBUG = False

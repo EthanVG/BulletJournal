@@ -2,7 +2,7 @@
 {% block content %}
 
 <!-- Header -->
-<header class="masthead" style="">
+<header class="masthead" style="background-image: url('../static/images/pexels-photo.jpg')">
     <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -22,24 +22,26 @@
     <div class="col-lg-8 col-md-10 mx-auto">
         
         <form role="form" method="POST">
-            <div>
-                Date: <input type="text" name="date" id="datepicker">
-            </div>
-            <div>
-                <label for="contentType">Bullet Type</label>
-                <select id="contentType" name="contentType">
+            <div style="width: 50%">
+                <label style="text-align: left">Date: </label>
+                <input type="text" name="date" id="datepicker" style="float: right">
+                <br/>
+
+                <label for="contentType" style="text-align: left">Bullet Type: </label>
+                <select id="contentType" name="contentType" style="float: right">
                     <option value="task">Task</option> 
                     <option value="event">Event</option>
                     <option value="note">Note</option>
                 </select>
+                <br/>
+
+                <label for="content" style="text-align: left">Content: </label>
+                <textarea id="content" name="content" style="float: right" placeholder="Bullet content" rows="2" required></textarea>
+                <br/>
             </div>
-            <div>
-                <label for="content">Content</label>
-                <textarea id="content" name="content" placeholder="Bullet content" rows="2" required></textarea>
-            </div>
+            <br/>
             <button type="submit">Submit</button>
         </form>
-
     </div>
   </div>
 </div>

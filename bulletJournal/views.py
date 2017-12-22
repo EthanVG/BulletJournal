@@ -1,10 +1,26 @@
 from flask import render_template
 from flask import request, redirect, url_for
-from flask import flash
-from datetime import datetime, date
+from datetime import date
 from . import app
 from .database import session, Bullet
+import logging
 
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+
+def setup_logger(name, log_file, level=logging.INFO):
+    """Function setup as many loggers as you want"""
+
+    handler = logging.FileHandler(log_file)        
+    handler.setFormatter(formatter)
+
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    logger.addHandler(handler)
+
+    return logger
+    
+# APP LOGGER
+app_logger = setup_logger('app_logger', 'app.log')
 
 @app.route("/", methods=["GET"])
 @app.route("/page/<int:page>", methods=["GET"])
@@ -17,13 +33,14 @@ def home(page=1):
     currentDate = request.args.get("date")
 
     if currentDate == "" or currentDate is None:
-        currentDate=date.today().strftime("%m/%d/%Y")
+        currentDate = date.today().strftime("%m/%d/%Y")
 
-    PAGINATE_BY=10
+    PAGINATE_BY = 10
     page_index = page - 1
     try:
         count = session.query(Bullet).filter(Bullet.complete == 0).count()
     except:
+        app_logger.warning('server rollback from home()')
         session.rollback()
         count = session.query(Bullet).filter(Bullet.complete == 0).count()
 
@@ -39,28 +56,32 @@ def home(page=1):
     bullets = bullets.filter(Bullet.complete == 0)
     bullets = bullets.all()
     bullets = bullets[start:end]
-
+    
+    app_logger.info('home page accessed')
+    
     return render_template("bullets.html",
-        bullets=bullets,
-        date=currentDate,
-        has_next=has_next,
-        has_prev=has_prev,
-        page=page,
-        total_pages=total_pages
-        )
+                           bullets=bullets,
+                           date=currentDate,
+                           has_next=has_next,
+                           has_prev=has_prev,
+                           page=page,
+                           total_pages=total_pages
+                           )
 
 
 @app.route("/bullet/add", methods=["GET"])
 def add_bullet_get():
     """ Returns page for Add Bullet """
-
+    
+    app_logger.info('add_bullet page accessed')
+    
     return render_template("addBullet.html")
 
 
 @app.route("/bullet/add", methods=["POST"])
 def add_bullet_post():
     """ Adds a bullet """
-
+    
     bullet = Bullet(
         contentType=request.form["contentType"],
         content=request.form["content"],
@@ -70,6 +91,10 @@ def add_bullet_post():
 
     session.add(bullet)
     session.commit()
+
+    
+    app_logger.info('add_bullet page submitted')
+
     return redirect(url_for("home"))
 
 
@@ -77,6 +102,8 @@ def add_bullet_post():
 def edit_bullet_get(ID):
     """ Returns the Edit Bullet page with selected bullet """
     """ :param ID: ID for selected bullet """
+
+    app_logger.info('edit_bullet page accessed')
 
     bullet = session.query(Bullet).get(ID)
     return render_template("editBullet.html", bullet=bullet)
@@ -93,6 +120,10 @@ def edit_bullet_post(ID):
     bullet.date = request.form["date"]
 
     session.commit()
+    
+    
+    app_logger.info('edit_bullet page submitted')
+    
     return redirect(url_for("home"))
 
 
@@ -114,7 +145,7 @@ def search_bullet_display(page=1):
     """ Searches database with bullets whose content contains q """
     """ :param q: search query from user """
 
-    q=request.args.get("q", type=str)
+    q = request.args.get("q", type=str)
 
     if q:
         found = session.query(Bullet).filter(Bullet.content.contains(q))
@@ -122,7 +153,7 @@ def search_bullet_display(page=1):
     else:
         found = session.query(Bullet).filter(Bullet.complete == 0)
 
-    PAGINATE_BY=10
+    PAGINATE_BY = 10
     page_index = page - 1
 
     count = found.count()
@@ -136,20 +167,25 @@ def search_bullet_display(page=1):
 
     found = found[start:end]
 
+    app_logger.info('search_bullet_display page accessed')
+
     return render_template("search_display.html",
-        bullets=found,
-        has_next=has_next,
-        has_prev=has_prev,
-        page=page,
-        total_pages=total_pages,
-        q=q
-        )
+                           bullets=found,
+                           has_next=has_next,
+                           has_prev=has_prev,
+                           page=page,
+                           total_pages=total_pages,
+                           q=q
+                           )
 
 
 @app.route("/bullet/<int:ID>/migrate", methods=["GET"])
 def migrate_bullet_get(ID):
     """ Returns Migrate page for selected bullet """
     """ :param ID: ID for selected bullet """
+
+    
+    app_logger.info('migrate page accessed')
 
     bullet = session.query(Bullet).get(ID)
     return render_template("migrate.html", bullet=bullet)
@@ -164,6 +200,9 @@ def migrate_bullet_post(ID):
     bullet.migrate(request.form["date"])
     session.commit()
 
+    
+    app_logger.info('migrate page submitted')
+
     return redirect(url_for("home"))
 
 
@@ -175,6 +214,9 @@ def complete_bullet(ID):
     bullet = session.query(Bullet).get(ID)
     bullet.complete = 1
     session.commit()
+
+    
+    app_logger.info('complete page accessed')
 
     return redirect(url_for("home"))
 
@@ -189,6 +231,9 @@ def backlog_get():
     for bullet in bullets:
         if bullet.date < date.today():
             found.append(bullet)
+
+    
+    app_logger.info('backlog page accessed')
 
     return render_template("backlog.html", bullets=found)
 
@@ -215,4 +260,7 @@ def backlog_post():
         bullet.migrate(toDate)
 
     session.commit()
+    
+    app_logger.info('backlog page submitted')
+
     return redirect(url_for("home"))

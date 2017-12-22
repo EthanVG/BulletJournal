@@ -2,15 +2,15 @@
     
     <div style="display: inline">
         {% if bullet.contentType == "task" %}
-            <p>*</p>
+            <img src="{{ url_for('static', filename='images/if_primitive-dot_298849.png') }}" alt="Dot" hspace="15">
         {% elif bullet.contentType == "event" %}
-            <p>O</p>
+            <img src="{{ url_for('static', filename='images/if_icon-ios7-circle-outline_211717.png') }}" alt="Circle" hspace="15">
         {% elif bullet.contentType == "note" %}
-            <p style="display: inline">-</p>
+            <img src="{{ url_for('static', filename='images/if_dash_298755.png') }}" alt="Dash" hspace="15">
         {% endif %}
     </div>
     <div style="display: inline">
-        <p style="display: inline">{{ bullet.content | markdown }}</p>
+        {{ bullet.content }}
     </div>
     
     <p>{{ bullet.date | dateformat("%m/%d/%y") }}</p>

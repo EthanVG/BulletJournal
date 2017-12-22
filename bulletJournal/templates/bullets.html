@@ -3,7 +3,7 @@
 {% block content %}
 
 <!-- Header -->
-<header class="masthead" style="">
+<header class="masthead" style="background-image: url('../static/images/pexels-photo.jpg')">
     <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -54,6 +54,7 @@
                     
                     
             <div class="clearfix">
+                <br/>
                 {% if has_next %}
                     <a href="{{ url_for('home', page=page + 1, date=date) }}" class="btn btn-primary float-left"> Previous Bullets &larr; </a>
                 {% endif %}

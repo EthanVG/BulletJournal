@@ -3,14 +3,14 @@
 {% block content %}
 
 <!-- Header -->
-<header class="masthead" style="">
+<header class="masthead" style="background-image: url('../static/images/pexels-photo.jpg')">
     <div class="overlay"></div>
         <div class="container">
             <div class="row">
               <div class="col-lg-8 col-md-10 mx-auto">
                 <div class="site-heading">
-            <h1>Migrate Your Bullets</h1>
-              <span class="subheading">What Do You Need To Move?</span>
+                    <h1>Migrate Your Bullets</h1>
+                    <span class="subheading">Use the checkbox to select bullets to move</span>
                 </div>
             </div>
         </div>
@@ -31,6 +31,7 @@
                         <button type="submit">Submit</button>
                     </div>
                 </div>
+                <br/>
             
                 {% for bullet in bullets %}
                 
